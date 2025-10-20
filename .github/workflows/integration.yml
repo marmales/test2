@@ -12,9 +12,11 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - name: setup dotnet ${{ matrix.dotnet-version }}
+        
         uses: actions/setup-dotnet@v4
         with: 
           dotnet-version: ${{ matrix.dotnet-version }}
+          
       - name: Set up dependency caching for faster builds
         uses: actions/cache@v3
         with:
@@ -22,16 +24,18 @@ jobs:
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
           restore-keys: |
             ${{ runner.os }}-nuget-
+            
       - name: Publish
         run: |
           dotnet publish azure-app-service.csproj \
             --configuration Release \
-            --output ./publish \
+            --output ${{env.DOTNET_ROOT}}/publish \
             --runtime linux-x64
-      - name: Upload publish folder as artifact
+          
+      - name: Publish
         uses: actions/upload-artifact@v4
         with:
-          name: published-app
+          name: .published-app
           path: ${{env.DOTNET_ROOT}}/publish
   deploy:
     runs-on: ubuntu-latest
@@ -44,7 +48,7 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
-          name: published-app
+          name: .published-app
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
