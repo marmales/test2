@@ -1,0 +1,21 @@
+﻿name: Build test site
+run-name: ${{ github.sha }} commit building
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: [ '9.0.x' ]
+    steps:
+      - uses: actions/checkout@v5
+      - name: setup dotnet ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v4
+        with: 
+          dotnet-version: ${{ matrix.dotnet-version }}
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore
+      - name: Publish the package to GPR
+        run: dotnet nuget push test2/bin/Release/*.nupkg
