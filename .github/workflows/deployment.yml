@@ -9,7 +9,9 @@ on:
         description: "artifact ID from integration.yml"
         required: true
         default: "published-app"
-
+env:
+  AZURE_WEBAPP_NAME: test-app
+  
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -43,7 +45,7 @@ jobs:
         if: always()
         uses: azure/webapps-deploy@v2
         with:
-          app-name: YOUR_APP_NAME
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
           slot-name: production
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: ./publish
