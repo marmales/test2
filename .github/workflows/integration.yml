@@ -59,7 +59,7 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'test-app'
-          slot-name: 'Development'
+          slot-name: 'stage'
           package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
           
       - name: logout
