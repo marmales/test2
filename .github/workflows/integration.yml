@@ -58,8 +58,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'test-app'
-          slot-name: 'stage'
+          app-name: 'internal-test'
           package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
           
       - name: logout
