@@ -2,7 +2,7 @@
 run-name: ${{ github.sha }} commit building
 env:
   AZURE_WEBAPP_PACKAGE_PATH: '.'
-  APP_NAME: 'internal_test'
+  APP_NAME: 'dupa'
 on: [push]
 jobs:
   build:
