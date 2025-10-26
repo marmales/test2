@@ -34,7 +34,7 @@ jobs:
           dotnet publish azure-app-service.csproj \
             --configuration Release \
             --output ${{env.DOTNET_ROOT}}/publish \
-            --runtime linux-x64
+            --runtime win-x64
           
       - name: Publish
         uses: actions/upload-artifact@v4
